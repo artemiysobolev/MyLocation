@@ -2,11 +2,6 @@ package com.example.mylocation;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
-
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -37,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -79,13 +75,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_deviceinfo) {
-
         } else if (id == R.id.nav_messages) {
-
         } else if (id == R.id.nav_photos) {
-
         } else if (id == R.id.nav_contacts) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
