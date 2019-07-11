@@ -25,6 +25,8 @@
         android:layout_toRightOf="@+id/imageView"
         android:text="Name"
         android:textSize="17dp"
+        android:maxLength="27"
+        android:maxLines="2"
         />
 
     <TextView
@@ -37,6 +39,7 @@
         android:layout_toRightOf="@+id/imageView"
         android:text="DateOfCreate"
         android:textSize="13dp"
+
         />
 
     <TextView
@@ -44,8 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView_DateOfCreate"
-        android:layout_marginLeft="213dp"
-        android:layout_marginTop="-1dp"
+        android:layout_marginLeft="196dp"
+        android:layout_marginTop="2dp"
         android:layout_toRightOf="@+id/imageView"
         android:text="Size"
         android:textSize="13dp" />

@@ -117,6 +117,10 @@ public class ListOfImagesActivity extends AppCompatActivity {
 
             do {
                 String currentTitle = photoCursor.getString(photoTitle);
+                if (currentTitle.length()>27)
+                {
+                    currentTitle = currentTitle.substring(0,24)+"...";
+                }
                 String currentDate = converToTime(photoCursor.getString(photoDate));
                 String currentSize = converToSize(photoCursor.getString(photoSize));
                 arrayList_of_images.add(new Image(currentTitle, currentDate, currentSize));
