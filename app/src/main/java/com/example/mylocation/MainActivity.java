@@ -1,5 +1,6 @@
 package com.example.mylocation;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -20,6 +21,12 @@ import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int id;
+    // Создадим новый фрагмент
+    private Fragment fragment = null;
+    private Class fragmentClass = null;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,28 +80,27 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Создадим новый фрагмент
-        Fragment fragment = null;
-        Class fragmentClass = null;
 
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        id = item.getItemId();
 
         if (id == R.id.nav_deviceinfo) {
             // Handle the camera action
             fragmentClass = DeviceInfoFragment.class;
+            tryInstance();
+            Intent intent = new Intent(this, DeviceInfoActivity.class);
+            startActivityForResult(intent, 1);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("info", name);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_messages) {
             fragmentClass = MessagesFragment.class;
         } else if (id == R.id.nav_photos) {
             fragmentClass = PhotosFragment.class;
         } else if (id == R.id.nav_contacts) {
             fragmentClass = ContactsFragment.class;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
@@ -105,8 +111,29 @@ public class MainActivity extends AppCompatActivity
         // Выводим выбранный пункт в заголовке
         setTitle(item.getTitle());
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (id == R.id.nav_deviceinfo) {
+            name = data.getStringExtra("info");
+
+        } else if (id == R.id.nav_messages) {
+        } else if (id == R.id.nav_photos) {
+        } else if (id == R.id.nav_contacts) {
+        }
+    }
+
+    protected void tryInstance() {
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
