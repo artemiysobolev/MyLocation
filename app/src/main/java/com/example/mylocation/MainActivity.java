@@ -42,6 +42,17 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        fragmentClass = DeviceInfoFragment.class;
+        tryInstance();
+        Intent intent = new Intent(this, DeviceInfoActivity.class);
+        startActivityForResult(intent, 1);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("info", name);
+        fragment.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     @Override
@@ -94,13 +105,17 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putString("info", name);
             fragment.setArguments(bundle);
-
         } else if (id == R.id.nav_messages) {
             fragmentClass = MessagesFragment.class;
+            tryInstance();
+
         } else if (id == R.id.nav_photos) {
             fragmentClass = PhotosFragment.class;
+            tryInstance();
+
         } else if (id == R.id.nav_contacts) {
             fragmentClass = ContactsFragment.class;
+            tryInstance();
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
