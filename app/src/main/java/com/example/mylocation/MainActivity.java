@@ -13,6 +13,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
 
@@ -71,16 +73,39 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        // Создадим новый фрагмент
+        Fragment fragment = null;
+        Class fragmentClass = null;
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_deviceinfo) {
+            // Handle the camera action
+            fragmentClass = DeviceInfoFragment.class;
         } else if (id == R.id.nav_messages) {
+            fragmentClass = MessagesFragment.class;
         } else if (id == R.id.nav_photos) {
+            fragmentClass = PhotosFragment.class;
         } else if (id == R.id.nav_contacts) {
+            fragmentClass = ContactsFragment.class;
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Вставляем фрагмент, заменяя текущий фрагмент
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        // Выделяем выбранный пункт меню в шторке
+        item.setChecked(true);
+        // Выводим выбранный пункт в заголовке
+        setTitle(item.getTitle());
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
