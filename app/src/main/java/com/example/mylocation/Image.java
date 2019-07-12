@@ -5,10 +5,10 @@ public class Image {
     String dateOfCreateImage;
     String sizeImage;
 
-    Image(String _name,String _date,String _size)
+    Image(String my_name,String my_date,String my_size)
     {
-        nameImage=_name;
-        dateOfCreateImage=_date;
-        sizeImage=_size;
+        nameImage=my_name;
+        dateOfCreateImage=my_date;
+        sizeImage=my_size;
     }
 }
