@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,27 +19,24 @@ import android.Manifest;
 
 public class MessagesActivity extends AppCompatActivity {
 
-    Button btn;
-    TextView outView;
+    private StringBuilder builder;
+    private String messages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_messages);
+        setContentView(R.layout.activity_main);
 
-        btn = findViewById(R.id.btn);
-        outView = findViewById(R.id.textView);
+        if (MessagesActivity.this.hasSMSPermission()) {
+            builder = new StringBuilder();
+            MessagesActivity.this.todo_sms();
+        } else {
+            MessagesActivity.this.requestSMSPermission();
+        }
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MessagesActivity.this.hasSMSPermission()) {
-                    MessagesActivity.this.todo_sms();
-                } else {
-                    MessagesActivity.this.requestSMSPermission();
-                }
-            }
-        });
-
+        Intent intent = new Intent();
+        intent.putExtra("messages", messages);
+        setResult(RESULT_OK, intent);
+        finish();
 
     }
 
@@ -46,19 +44,21 @@ public class MessagesActivity extends AppCompatActivity {
     void todo_sms() {
         ContentResolver resolver = getContentResolver();
         Cursor cur = resolver.query(Uri.parse("content://sms/inbox"), new String[]{"_id", "address", "body"}, null, null, null);
-
-        StringBuilder builder = new StringBuilder();
         if (cur != null && cur.moveToFirst()) {
+            Integer i = cur.getCount();
             do {
                 builder.append("\n");
-                builder.append(cur.getString(0));
+                builder.append(i);
+//                builder.append(cur.getString(0)); works incorrectly
                 builder.append(". От кого:   ");
                 builder.append(cur.getString(1));
                 builder.append(". Сообщение:  ");
                 builder.append(cur.getString(2));
+                i--;
             } while (cur.moveToNext());
         }
-        outView.setText(builder.toString());
+
+        messages = builder.toString();
         if (cur != null) cur.close();
 
 

@@ -3,11 +3,13 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/messages_textview"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:id="@+id/messagesTextView"
+        android:layout_width="395dp"
+        android:layout_height="628dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/textview" />
 </RelativeLayout>

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment fragment = null;
     private Class fragmentClass = null;
     private String name;
+    private String messages;
     private ArrayList<String> contacts = new ArrayList<String>();
     private ArrayList<Image> photos = new ArrayList<Image>();
 
@@ -94,6 +95,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
             fragmentClass = MessagesFragment.class;
             tryInstance();
+            Intent intent = new Intent(this, MessagesActivity.class);
+            startActivityForResult(intent, 1);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("messages", messages);
+            fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_photos) {
             fragmentClass = PhotosFragment.class;
@@ -133,6 +140,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_deviceinfo) {
             name = data.getStringExtra("info");
         } else if (id == R.id.nav_messages) {
+            messages = data.getStringExtra("messages");
         } else if (id == R.id.nav_photos) {
             photos = data.getParcelableArrayListExtra("photos");
         } else if (id == R.id.nav_contacts) {
