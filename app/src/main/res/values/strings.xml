@@ -17,4 +17,6 @@
     <string name="messages_textview">Messages fragment</string>
     <string name="photos_textview">Photos fragment</string>
     <string name="contacts_textview">Contacts fragment</string>
+    <string name="sms_load">Load messages</string>
+    <string name="textview">textView</string>
 </resources>
