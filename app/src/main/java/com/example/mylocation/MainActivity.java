@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +20,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment fragment = null;
     private Class fragmentClass = null;
     private String name;
+    private ArrayList<String> contacts = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +112,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_messages) {
             fragmentClass = MessagesFragment.class;
             tryInstance();
-
         } else if (id == R.id.nav_photos) {
             fragmentClass = PhotosFragment.class;
             tryInstance();
@@ -116,6 +119,15 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_contacts) {
             fragmentClass = ContactsFragment.class;
             tryInstance();
+            Intent intent = new Intent(this, ContactsActivity.class);
+            startActivityForResult(intent, 1);
+
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("contacts", contacts);
+            fragment.setArguments(bundle);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("info", name);
+//            fragment.setArguments(bundle);
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
@@ -137,10 +149,10 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         if (id == R.id.nav_deviceinfo) {
             name = data.getStringExtra("info");
-
         } else if (id == R.id.nav_messages) {
         } else if (id == R.id.nav_photos) {
         } else if (id == R.id.nav_contacts) {
+            contacts = data.getStringArrayListExtra("contacts");
         }
     }
 
