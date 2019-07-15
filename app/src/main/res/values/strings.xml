@@ -13,4 +13,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="device_info_textview">Device info fragment</string>
+    <string name="messages_textview">Messages fragment</string>
+    <string name="photos_textview">Photos fragment</string>
+    <string name="contacts_textview">Contacts fragment</string>
 </resources>
