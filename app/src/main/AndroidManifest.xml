@@ -9,14 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListContacts"
-            android:label="My contacts">
-            <intent-filter>
-                <action android:name=".ListContacts" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".DeviceInfoActivity"></activity>
+        <activity android:name=".ListContacts"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

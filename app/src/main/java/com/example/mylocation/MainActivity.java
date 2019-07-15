@@ -1,11 +1,7 @@
 package com.example.mylocation;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.View;
 
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -18,11 +14,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int id;
+    // Создадим новый фрагмент
+    private Fragment fragment = null;
+    private Class fragmentClass = null;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +34,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -45,10 +41,23 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        fragmentClass = DeviceInfoFragment.class;
+        tryInstance();
+        Intent intent = new Intent(this, DeviceInfoActivity.class);
+        startActivityForResult(intent, 1);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("info", name);
+        fragment.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -82,25 +91,64 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_deviceinfo) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            fragmentClass = DeviceInfoFragment.class;
+            tryInstance();
+            Intent intent = new Intent(this, DeviceInfoActivity.class);
+            startActivityForResult(intent, 1);
 
-        } else if (id == R.id.nav_slideshow) {
+            Bundle bundle = new Bundle();
+            bundle.putString("info", name);
+            fragment.setArguments(bundle);
+        } else if (id == R.id.nav_messages) {
+            fragmentClass = MessagesFragment.class;
+            tryInstance();
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_photos) {
+            fragmentClass = PhotosFragment.class;
+            tryInstance();
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_contacts) {
+            fragmentClass = ContactsFragment.class;
+            tryInstance();
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        // Вставляем фрагмент, заменяя текущий фрагмент
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        // Выделяем выбранный пункт меню в шторке
+        item.setChecked(true);
+        // Выводим выбранный пункт в заголовке
+        setTitle(item.getTitle());
+
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (id == R.id.nav_deviceinfo) {
+            name = data.getStringExtra("info");
+
+        } else if (id == R.id.nav_messages) {
+        } else if (id == R.id.nav_photos) {
+        } else if (id == R.id.nav_contacts) {
+        }
+    }
+
+    protected void tryInstance() {
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
