@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,36 +20,37 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class ListOfImagesActivity extends AppCompatActivity {
-
-
-    ListView listView;
+public class PhotosActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSION_REQUEST=1;
     ArrayList<Image> arrayList_of_images = new ArrayList<Image>();
-    BoxAdapter boxAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(ContextCompat.checkSelfPermission(ListOfImagesActivity.this,
+        if(ContextCompat.checkSelfPermission(PhotosActivity.this,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
         {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(ListOfImagesActivity.this,
+            if(ActivityCompat.shouldShowRequestPermissionRationale(PhotosActivity.this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE))
             {
-                ActivityCompat.requestPermissions(ListOfImagesActivity.this,
+                ActivityCompat.requestPermissions(PhotosActivity.this,
                         new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST);
             }
             else {
-                ActivityCompat.requestPermissions(ListOfImagesActivity.this,
+                ActivityCompat.requestPermissions(PhotosActivity.this,
                         new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST);
             }
         }
+
         else doStuff();
 
+        Intent intent = new Intent();
+        intent.putExtra("photos", arrayList_of_images);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void getPhoto()
@@ -93,16 +95,8 @@ public class ListOfImagesActivity extends AppCompatActivity {
 
     public void doStuff()
     {
-        listView = (ListView)findViewById(R.id.listview);
         arrayList_of_images=new ArrayList<>();
         fillData();
-
-
-        boxAdapter=new BoxAdapter(this,arrayList_of_images);
-
-        ListView lvMain=(ListView) findViewById(R.id.listview);
-        lvMain.setAdapter(boxAdapter);
-
     }
 
     public void fillData() {

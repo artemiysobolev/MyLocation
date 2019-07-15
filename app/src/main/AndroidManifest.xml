@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DeviceInfoActivity"></activity>
+        <activity android:name=".PhotosActivity"></activity>
         <activity android:name=".ContactsActivity"></activity>
         <activity
             android:name=".MainActivity"

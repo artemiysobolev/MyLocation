@@ -13,7 +13,6 @@ public class DeviceInfoActivity extends AppCompatActivity {
     private String info;
     private Intent intent;
 
-//    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
