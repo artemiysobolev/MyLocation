@@ -47,17 +47,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        id = R.id.nav_deviceinfo;
         fragmentClass = DeviceInfoFragment.class;
         tryInstance();
         Intent intent = new Intent(this, DeviceInfoActivity.class);
         startActivityForResult(intent, 1);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("info", name);
-        fragment.setArguments(bundle);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     @Override
@@ -85,12 +79,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_deviceinfo) {
             fragmentClass = DeviceInfoFragment.class;
             tryInstance();
+
             Intent intent = new Intent(this, DeviceInfoActivity.class);
             startActivityForResult(intent, 1);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("info", name);
-            fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_messages) {
             fragmentClass = MessagesFragment.class;
@@ -98,33 +89,20 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, MessagesActivity.class);
             startActivityForResult(intent, 1);
 
-            Bundle bundle = new Bundle();
-            bundle.putString("messages", messages);
-            fragment.setArguments(bundle);
-
         } else if (id == R.id.nav_photos) {
             fragmentClass = PhotosFragment.class;
             tryInstance();
             Intent intent = new Intent(this, PhotosActivity.class);
             startActivityForResult(intent, 1);
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("photos", photos);
-            fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_contacts) {
             fragmentClass = ContactsFragment.class;
             tryInstance();
             Intent intent = new Intent(this, ContactsActivity.class);
             startActivityForResult(intent, 1);
-
-            Bundle bundle = new Bundle();
-            bundle.putStringArrayList("contacts", contacts);
-            fragment.setArguments(bundle);
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
         item.setChecked(true);
         setTitle(item.getTitle());
 
@@ -139,13 +117,31 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         if (id == R.id.nav_deviceinfo) {
             name = data.getStringExtra("info");
+            Bundle bundle = new Bundle();
+            bundle.putString("info", name);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_messages) {
             messages = data.getStringExtra("messages");
+            Bundle bundle = new Bundle();
+            bundle.putString("messages", messages);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_photos) {
             photos = data.getParcelableArrayListExtra("photos");
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("photos", photos);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_contacts) {
             contacts = data.getStringArrayListExtra("contacts");
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("contacts", contacts);
+            fragment.setArguments(bundle);
         }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     protected void tryInstance() {
