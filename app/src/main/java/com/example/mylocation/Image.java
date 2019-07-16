@@ -5,35 +5,12 @@ import android.os.Parcelable;
 
 //made from usual class by http://www.parcelabler.com
 public class Image implements Parcelable {
-    public String getDateOfCreateImage() {
-        return dateOfCreateImage;
-    }
+    String nameImage;
+    String dateOfCreateImage;
+    String sizeImage;
 
-    public void setDateOfCreateImage(String dateOfCreateImage) {
-        this.dateOfCreateImage = dateOfCreateImage;
-    }
-
-    public String getSizeImage() {
-        return sizeImage;
-    }
-
-    public void setSizeImage(String sizeImage) {
-        this.sizeImage = sizeImage;
-    }
-
-    public String getNameImage() {
-        return nameImage;
-    }
-
-    public void setNameImage(String nameImage) {
-        this.nameImage = nameImage;
-    }
-
-    private String nameImage;
-    private String dateOfCreateImage;
-    private String sizeImage;
-
-    Image(String my_name,String my_date,String my_size) {
+    Image(String my_name,String my_date,String my_size)
+    {
         nameImage=my_name;
         dateOfCreateImage=my_date;
         sizeImage=my_size;

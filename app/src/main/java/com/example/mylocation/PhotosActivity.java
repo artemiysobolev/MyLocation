@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 public class PhotosActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSION_REQUEST=1;
-    private ArrayList<Image> imagelist= new ArrayList<Image>();
+    ArrayList<Image> arrayList_of_images = new ArrayList<Image>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,11 @@ public class PhotosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(ContextCompat.checkSelfPermission(PhotosActivity.this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+                android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        {
             if(ActivityCompat.shouldShowRequestPermissionRationale(PhotosActivity.this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE))
+            {
                 ActivityCompat.requestPermissions(PhotosActivity.this,
                         new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST);
             }
@@ -46,13 +48,39 @@ public class PhotosActivity extends AppCompatActivity {
         else doStuff();
 
         Intent intent = new Intent();
-        intent.putExtra("photos", imagelist);
+        intent.putExtra("photos", arrayList_of_images);
         setResult(RESULT_OK, intent);
         finish();
     }
 
+    public void getPhoto()
+    {
+        View listView_item = getLayoutInflater().inflate(R.layout.photolayout,null);
+        ContentResolver contentResolver=getContentResolver();
+        Uri photoUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        Cursor photoCursor=contentResolver.query(photoUri,null,null,null,null);
 
-    public static String converToTime(String timestamp) {
+        if(photoCursor!=null && photoCursor.moveToFirst())
+        {
+            int photoTitle =photoCursor.getColumnIndex(MediaStore.Images.Media.TITLE);
+            int photoDate =photoCursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);
+            int photoSize =photoCursor.getColumnIndex(MediaStore.Images.Media.SIZE);
+            do {
+                String currentTitle = photoCursor.getString(photoTitle);
+                String currentDate = converToTime(photoCursor.getString(photoDate));
+                String currentSize = converToSize(photoCursor.getString(photoSize));
+                TextView textView_Name = (TextView) listView_item.findViewById(R.id.textView_Name_Photo);
+                textView_Name.setText(currentTitle);
+                TextView textView_Date= (TextView) listView_item.findViewById(R.id.textView_DateOfCreate);
+                textView_Date.setText(currentDate);
+                TextView textView_Size = (TextView) listView_item.findViewById(R.id.textView_Size);
+                textView_Size.setText(currentSize);
+                //arrayList_of_images.add(listView);
+            } while (photoCursor.moveToNext());
+        }
+    }
+    public static String converToTime(String timestamp)
+    {
         long datetime = Long.parseLong(timestamp);
         Date date = new Date(datetime);
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -60,12 +88,14 @@ public class PhotosActivity extends AppCompatActivity {
         return formatter.format(date);
     }
 
-    public static String converToSize(String size) {
+    public static String converToSize(String size)
+    {
         return Double.toString(Math.round(Double.parseDouble(size)/1000 * 100.0)/100.0)+" KB";
     }
 
-    public void doStuff() {
-        imagelist=new ArrayList<>();
+    public void doStuff()
+    {
+        arrayList_of_images=new ArrayList<>();
         fillData();
     }
 
@@ -74,21 +104,21 @@ public class PhotosActivity extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         Uri photoUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         Cursor photoCursor = contentResolver.query(photoUri, null, null, null, null);
-
         if (photoCursor != null && photoCursor.moveToFirst()) {
             int photoTitle = photoCursor.getColumnIndex(MediaStore.Images.Media.TITLE);
             int photoDate = photoCursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);
             int photoSize = photoCursor.getColumnIndex(MediaStore.Images.Media.SIZE);
 
-            while (!photoCursor.moveToNext()){
+            do {
                 String currentTitle = photoCursor.getString(photoTitle);
-                if (currentTitle.length()>27) {
+                if (currentTitle.length()>27)
+                {
                     currentTitle = currentTitle.substring(0,24)+"...";
                 }
                 String currentDate = converToTime(photoCursor.getString(photoDate));
                 String currentSize = converToSize(photoCursor.getString(photoSize));
-                imagelist.add(new Image(currentTitle, currentDate, currentSize));
-            }
+                arrayList_of_images.add(new Image(currentTitle, currentDate, currentSize));
+            } while (photoCursor.moveToNext());
         }
 
     }

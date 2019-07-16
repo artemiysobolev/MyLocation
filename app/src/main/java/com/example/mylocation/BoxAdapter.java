@@ -10,11 +10,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class BoxAdapter extends BaseAdapter {
-    private Context ctx;
-    private LayoutInflater layoutInflater;
-    private ArrayList<Image> objects;
+    Context ctx;
+    LayoutInflater layoutInflater;
+    ArrayList<Image> objects;
 
-    BoxAdapter(Context context,ArrayList<Image> images) {
+    BoxAdapter(Context context,ArrayList<Image> images)
+    {
         ctx=context;
         objects=images;
         layoutInflater=(LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,14 +45,18 @@ public class BoxAdapter extends BaseAdapter {
 
         Image image=getImage(i);
 
-        ((TextView) view.findViewById(R.id.textView_Name_Photo)).setText(image.getNameImage());
-        ((TextView) view.findViewById(R.id.textView_DateOfCreate)).setText(image.getDateOfCreateImage());
-        ((TextView) view.findViewById(R.id.textView_Size)).setText(image.getSizeImage());
+        ((TextView) view.findViewById(R.id.textView_Name_Photo)).setText(image.nameImage);
+        ((TextView) view.findViewById(R.id.textView_DateOfCreate)).setText(image.dateOfCreateImage);
+        ((TextView) view.findViewById(R.id.textView_Size)).setText(image.sizeImage);
 
         return view;
     }
 
-    private Image getImage(int i) {
+
+    Image getImage(int i)
+    {
         return ((Image) getItem(i));
     }
+
+
 }
