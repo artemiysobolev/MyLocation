@@ -148,8 +148,7 @@ public class MainActivity extends AppCompatActivity
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
-            //need to change!!!
-            e.printStackTrace();
+            Log.e("MyLocation", "Exception with try to make instance.", e);
         }
     }
 }
