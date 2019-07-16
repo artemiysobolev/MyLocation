@@ -6,17 +6,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import com.example.mylocation.R;
 
 import java.util.ArrayList;
 
@@ -53,7 +48,7 @@ public class ContactsActivity extends AppCompatActivity {
             GetContactsIntoArrayList();
         }
 
-        listView = (ListView) findViewById(R.id.listview1);
+        listView = (ListView) findViewById(R.id.contactsListView);
 
         Intent intent = new Intent();
             intent.putStringArrayListExtra("contacts", StoreContacts);

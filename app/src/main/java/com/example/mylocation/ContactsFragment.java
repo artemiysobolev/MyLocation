@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -27,7 +26,7 @@ public class ContactsFragment extends Fragment {
                 inflater.inflate(R.layout.fragment_contacts, container, false);
         contactListFromActivity = new ArrayList<String>();
         contactListFromActivity = getArguments().getStringArrayList("contacts");
-        listView = (ListView) rootView.findViewById(R.id.listview1);
+        listView = (ListView) rootView.findViewById(R.id.contactsListView);
         arrayAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.fragment_contacts, R.id.contactsTextView, contactListFromActivity);
         listView.setAdapter(arrayAdapter);
 
