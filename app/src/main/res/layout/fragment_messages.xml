@@ -33,7 +33,7 @@ android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/messagesTextView"
-        android:layout_width="376dp"
+        android:layout_width="352dp"
         android:layout_height="652dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"

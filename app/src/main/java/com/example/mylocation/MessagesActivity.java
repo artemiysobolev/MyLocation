@@ -21,6 +21,14 @@ public class MessagesActivity extends AppCompatActivity {
 
     private StringBuilder builder;
     private String messages;
+
+    protected void newIntent() {
+        Intent intent = new Intent();
+        intent.putExtra("messages", messages);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +41,7 @@ public class MessagesActivity extends AppCompatActivity {
             MessagesActivity.this.requestSMSPermission();
         }
 
-        Intent intent = new Intent();
-        intent.putExtra("messages", messages);
-        setResult(RESULT_OK, intent);
-        finish();
-
+        newIntent();
     }
 
 

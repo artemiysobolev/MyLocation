@@ -29,6 +29,13 @@ public class ContactsActivity extends AppCompatActivity {
     String name, phonenumber ;
     private static final int MY_PERMISSION_REQUEST=1;
 
+    protected void newIntent() {
+        Intent intent = new Intent();
+        intent.putStringArrayListExtra("contacts", StoreContacts);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +61,7 @@ public class ContactsActivity extends AppCompatActivity {
         }
 
         listView = (ListView) findViewById(R.id.listview1);
-
-        Intent intent = new Intent();
-            intent.putStringArrayListExtra("contacts", StoreContacts);
-            setResult(RESULT_OK, intent);
-            finish();
+        newIntent();
     }
 
     public void GetContactsIntoArrayList(){
