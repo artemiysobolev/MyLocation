@@ -56,6 +56,7 @@ public class BoxAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.textView_Size)).setText(image.getSizeImage());
 
         Uri uriFromPath = Uri.fromFile(new File(image.getRealPath()));
+
         Bitmap bitmap = null;
         InputStream inputStream;
 
@@ -64,7 +65,9 @@ public class BoxAdapter extends BaseAdapter {
             bitmap = BitmapFactory.decodeStream(inputStream);
         }catch (FileNotFoundException e) {e.printStackTrace(); }
 
-        ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(bitmap);
+        Bitmap cropImg = Bitmap.createScaledBitmap(bitmap, 88 , 88,true);
+
+        ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(cropImg);
         return view;
     }
 
