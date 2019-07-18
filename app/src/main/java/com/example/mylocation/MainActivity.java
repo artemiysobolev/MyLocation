@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity
     private Fragment fragment = null;
     private Class fragmentClass = null;
     private String name;
-    private String messages;
     private ArrayList<String> contacts = new ArrayList<String>();
+    private ArrayList<String> messages = new ArrayList<String>();
+
     private ArrayList<Image> photos = new ArrayList<Image>();
 
     @Override
@@ -122,10 +123,11 @@ public class MainActivity extends AppCompatActivity
             fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_messages) {
-            messages = data.getStringExtra("messages");
+            messages = data.getStringArrayListExtra("messages");
             Bundle bundle = new Bundle();
-            bundle.putString("messages", messages);
+            bundle.putStringArrayList("messages", messages);
             fragment.setArguments(bundle);
+
 
         } else if (id == R.id.nav_photos) {
             photos = data.getParcelableArrayListExtra("photos");
