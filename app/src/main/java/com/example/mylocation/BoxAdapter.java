@@ -21,8 +21,7 @@ public class BoxAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private ArrayList<Image> objects;
 
-    BoxAdapter(Context context,ArrayList<Image> images)
-    {
+    BoxAdapter(Context context,ArrayList<Image> images) {
         ctx=context;
         objects=images;
         layoutInflater=(LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -72,8 +71,7 @@ public class BoxAdapter extends BaseAdapter {
     }
 
 
-    Image getImage(int i)
-    {
+    Image getImage(int i){
         return ((Image) getItem(i));
     }
 
