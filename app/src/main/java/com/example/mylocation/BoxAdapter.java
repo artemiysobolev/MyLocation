@@ -1,18 +1,25 @@
 package com.example.mylocation;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class BoxAdapter extends BaseAdapter {
-    Context ctx;
-    LayoutInflater layoutInflater;
-    ArrayList<Image> objects;
+    private Context ctx;
+    private LayoutInflater layoutInflater;
+    private ArrayList<Image> objects;
 
     BoxAdapter(Context context,ArrayList<Image> images)
     {
@@ -44,11 +51,20 @@ public class BoxAdapter extends BaseAdapter {
         }
 
         Image image=getImage(i);
+        ((TextView) view.findViewById(R.id.textView_Name_Photo)).setText(image.getNameImage());
+        ((TextView) view.findViewById(R.id.textView_DateOfCreate)).setText(image.getDateOfCreateImage());
+        ((TextView) view.findViewById(R.id.textView_Size)).setText(image.getSizeImage());
 
-        ((TextView) view.findViewById(R.id.textView_Name_Photo)).setText(image.nameImage);
-        ((TextView) view.findViewById(R.id.textView_DateOfCreate)).setText(image.dateOfCreateImage);
-        ((TextView) view.findViewById(R.id.textView_Size)).setText(image.sizeImage);
+        Uri uriFromPath = Uri.fromFile(new File(image.getRealPath()));
+        Bitmap bitmap = null;
+        InputStream inputStream;
 
+        try {
+            inputStream = ctx.getContentResolver().openInputStream(uriFromPath);
+            bitmap = BitmapFactory.decodeStream(inputStream);
+        }catch (FileNotFoundException e) {e.printStackTrace(); }
+
+        ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(bitmap);
         return view;
     }
 
