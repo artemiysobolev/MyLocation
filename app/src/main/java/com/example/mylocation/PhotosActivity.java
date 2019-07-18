@@ -23,7 +23,7 @@ public class PhotosActivity extends AppCompatActivity {
 
     protected void newIntent() {
         Intent intent = new Intent();
-        intent.putExtra("photos", arrayList_of_images);
+        intent.putExtra("photos", listView);
         setResult(RESULT_OK, intent);
         finish();
     }
