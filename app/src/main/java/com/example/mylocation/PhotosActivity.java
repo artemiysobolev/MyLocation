@@ -57,7 +57,12 @@ public class PhotosActivity extends AppCompatActivity {
     }
 
     public static String converToSize(String size) {
-        return Double.toString(Math.round(Double.parseDouble(size)/1000 * 100.0)/100.0)+" KB";
+        Double newSize = Math.round(Double.parseDouble(size)/1000 * 100.0)/100.0;
+        if (newSize>=1000){
+            newSize=Math.round(newSize/1000 * 100.0)/100.0;
+            return Double.toString(newSize)+" MB";
+        }
+        return Double.toString(newSize)+" KB";
     }
 
     public void doStuff() {
