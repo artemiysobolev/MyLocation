@@ -21,13 +21,6 @@ public class PhotosActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST=1;
     ArrayList<Image> listView = new ArrayList<Image>();
 
-    protected void newIntent() {
-        Intent intent = new Intent();
-        intent.putExtra("photos", listView);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +40,11 @@ public class PhotosActivity extends AppCompatActivity {
         }
 
         else doStuff();
-        newIntent();
+
+        Intent intent = new Intent();
+        intent.putExtra("photos", listView);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 
@@ -102,4 +99,3 @@ public class PhotosActivity extends AppCompatActivity {
     }
 
 }
-
