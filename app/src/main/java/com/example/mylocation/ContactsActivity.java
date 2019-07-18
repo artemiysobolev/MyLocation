@@ -6,16 +6,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import com.example.mylocation.R;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -26,26 +22,38 @@ public class ContactsActivity extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter ;
     Cursor cursor ;
     String name, phonenumber ;
-    public  static final int RequestPermissionCode  = 1 ;
-    private Intent intent;
+    private static final int MY_PERMISSION_REQUEST=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
-
-        listView = (ListView)findViewById(R.id.listview1);
-
+        setContentView(R.layout.activity_main);
         StoreContacts = new ArrayList<String>();
 
-        EnableRuntimePermission();
+        if(ContextCompat.checkSelfPermission(ContactsActivity.this,
+                Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED)
+        {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(ContactsActivity.this,
+                    android.Manifest.permission.READ_CONTACTS))
+            {
+                ActivityCompat.requestPermissions(ContactsActivity.this,
+                        new String[]{android.Manifest.permission.READ_CONTACTS},MY_PERMISSION_REQUEST);
+            }
+            else {
+                ActivityCompat.requestPermissions(ContactsActivity.this,
+                        new String[]{android.Manifest.permission.READ_CONTACTS}, MY_PERMISSION_REQUEST);
+            }
+        } else {
+            GetContactsIntoArrayList();
+        }
 
-        GetContactsIntoArrayList();
+        listView = (ListView) findViewById(R.id.contactsListView);
 
-        intent = new Intent();
-        intent.putStringArrayListExtra("contacts", StoreContacts);
-        setResult(RESULT_OK, intent);
-        finish();
+        Intent intent = new Intent();
+            intent.putStringArrayListExtra("contacts", StoreContacts);
+            setResult(RESULT_OK, intent);
+            finish();
     }
 
     public void GetContactsIntoArrayList(){
@@ -65,42 +73,43 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
-    public void EnableRuntimePermission(){
+//    public void EnableRuntimePermission(){
+//
+//        if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                com.example.mylocation.ContactsActivity.this,
+//                Manifest.permission.READ_CONTACTS))
+//        {
+//
+//            Toast.makeText(com.example.mylocation.ContactsActivity.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
+//
+//        } else {
+//
+//            ActivityCompat.requestPermissions(com.example.mylocation.ContactsActivity.this,new String[]{
+//                    Manifest.permission.READ_CONTACTS}, RequestPermissionCode);
+//
+//        }
+//    }
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                com.example.mylocation.ContactsActivity.this,
-                Manifest.permission.READ_CONTACTS))
-        {
-
-            Toast.makeText(com.example.mylocation.ContactsActivity.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
-
-        } else {
-
-            ActivityCompat.requestPermissions(com.example.mylocation.ContactsActivity.this,new String[]{
-                    Manifest.permission.READ_CONTACTS}, RequestPermissionCode);
-
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
-
-        switch (RC) {
-
-            case RequestPermissionCode:
-
-                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Granted, Now your application can access CONTACTS.", Toast.LENGTH_LONG).show();
-
-                } else {
-
-                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Canceled, Now your application cannot access CONTACTS.", Toast.LENGTH_LONG).show();
-
-                }
-                break;
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
+//
+//
+//        switch (RC) {
+//
+//            case RequestPermissionCode:
+//
+//                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Granted, Now your application can access CONTACTS.", Toast.LENGTH_LONG).show();
+//
+//                } else {
+//
+//                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Canceled, Now your application cannot access CONTACTS.", Toast.LENGTH_LONG).show();
+//
+//                }
+//                break;
+//        }
+//    }
 
 
 }

@@ -26,11 +26,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private int id;
-    // Создадим новый фрагмент
     private Fragment fragment = null;
     private Class fragmentClass = null;
     private String name;
+    private String messages;
     private ArrayList<String> contacts = new ArrayList<String>();
+    private ArrayList<Image> photos = new ArrayList<Image>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +47,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        id = R.id.nav_deviceinfo;
         fragmentClass = DeviceInfoFragment.class;
         tryInstance();
         Intent intent = new Intent(this, DeviceInfoActivity.class);
         startActivityForResult(intent, 1);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("info", name);
-        fragment.setArguments(bundle);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     @Override
@@ -72,70 +67,43 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        // Handle navigation view item clicks here.
         id = item.getItemId();
 
         if (id == R.id.nav_deviceinfo) {
-            // Handle the camera action
             fragmentClass = DeviceInfoFragment.class;
             tryInstance();
+
             Intent intent = new Intent(this, DeviceInfoActivity.class);
             startActivityForResult(intent, 1);
 
-            Bundle bundle = new Bundle();
-            bundle.putString("info", name);
-            fragment.setArguments(bundle);
         } else if (id == R.id.nav_messages) {
             fragmentClass = MessagesFragment.class;
             tryInstance();
+            Intent intent = new Intent(this, MessagesActivity.class);
+            startActivityForResult(intent, 1);
+
         } else if (id == R.id.nav_photos) {
             fragmentClass = PhotosFragment.class;
             tryInstance();
+            Intent intent = new Intent(this, PhotosActivity.class);
+            startActivityForResult(intent, 1);
+
 
         } else if (id == R.id.nav_contacts) {
             fragmentClass = ContactsFragment.class;
             tryInstance();
             Intent intent = new Intent(this, ContactsActivity.class);
             startActivityForResult(intent, 1);
-
-            Bundle bundle = new Bundle();
-            bundle.putStringArrayList("contacts", contacts);
-            fragment.setArguments(bundle);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("info", name);
-//            fragment.setArguments(bundle);
         }
 
-        // Вставляем фрагмент, заменяя текущий фрагмент
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-        // Выделяем выбранный пункт меню в шторке
         item.setChecked(true);
-        // Выводим выбранный пункт в заголовке
         setTitle(item.getTitle());
 
 
@@ -149,18 +117,38 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         if (id == R.id.nav_deviceinfo) {
             name = data.getStringExtra("info");
+            Bundle bundle = new Bundle();
+            bundle.putString("info", name);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_messages) {
+            messages = data.getStringExtra("messages");
+            Bundle bundle = new Bundle();
+            bundle.putString("messages", messages);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_photos) {
+            photos = data.getParcelableArrayListExtra("photos");
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("photos", photos);
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_contacts) {
             contacts = data.getStringArrayListExtra("contacts");
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("contacts", contacts);
+            fragment.setArguments(bundle);
         }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     protected void tryInstance() {
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MyLocation", "Exception with try to make instance.", e);
         }
     }
 }

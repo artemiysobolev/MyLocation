@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/infoTextView"
         android:layout_width="332dp"
         android:layout_height="228dp"
         android:layout_marginBottom="8dp"
@@ -13,17 +13,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/infoImageView" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/infoImageView"
         android:layout_width="306dp"
         android:layout_height="193dp"
-        android:layout_marginTop="105dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="63dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/infoTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_info"
