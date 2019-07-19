@@ -13,6 +13,13 @@ public class DeviceInfoActivity extends AppCompatActivity {
     private String info;
     private Intent intent;
 
+    protected void newIntent() {
+        intent = new Intent();
+        intent.putExtra("info",info);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +34,6 @@ public class DeviceInfoActivity extends AppCompatActivity {
         final String myManufacturer = "Device manufacturer: " + android.os.Build.MANUFACTURER;
 
         info = myDeviceBrand + "\n" + myDeviceModel + "\n" + myDevice + "\n" + myAndroidVersion + "\n" + myHardware + "\n" + myManufacturer + "\n";
-        intent = new Intent();
-        intent.putExtra("info",info);
-        setResult(RESULT_OK, intent);
-        finish();
+        newIntent();
     }
 }

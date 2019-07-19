@@ -1,94 +1,79 @@
 package com.example.mylocation;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.Manifest;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
+
+
 
 public class MessagesActivity extends AppCompatActivity {
+    private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+    private ArrayList<String> MessageList;
 
-    private StringBuilder builder;
-    private String messages;
+    protected void newIntent() {
+        Intent intent = new Intent();
+        intent.putStringArrayListExtra("messages", MessageList);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int permissionCheck = ContextCompat.checkSelfPermission( this,
+                Manifest.permission.READ_SMS);
 
-        if (MessagesActivity.this.hasSMSPermission()) {
-            builder = new StringBuilder();
-            MessagesActivity.this.todo_sms();
-        } else {
-            MessagesActivity.this.requestSMSPermission();
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED){
+            showContacts();
+        }else{
+            ActivityCompat.requestPermissions( this,
+                    new String[]{Manifest.permission.READ_SMS},
+                    PERMISSIONS_REQUEST_READ_CONTACTS);
         }
 
-        Intent intent = new Intent();
-        intent.putExtra("messages", messages);
-        setResult(RESULT_OK, intent);
-        finish();
-
-    }
-
-
-    void todo_sms() {
-        ContentResolver resolver = getContentResolver();
-        Cursor cur = resolver.query(Uri.parse("content://sms/inbox"), new String[]{"_id", "address", "body"}, null, null, null);
-        if (cur != null && cur.moveToFirst()) {
-            Integer i = cur.getCount();
-            do {
-                builder.append("\n");
-                builder.append(i);
-//                builder.append(cur.getString(0)); works incorrectly
-                builder.append(". От кого:   ");
-                builder.append(cur.getString(1));
-                builder.append(". Сообщение:  ");
-                builder.append(cur.getString(2));
-                i--;
-            } while (cur.moveToNext());
-        }
-
-        messages = builder.toString();
-        if (cur != null) cur.close();
-
-
-    }
-
-    boolean hasSMSPermission() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    final static int CODE_PERMISSION_SMS = 42;
-
-    void requestSMSPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.READ_SMS}, CODE_PERMISSION_SMS);
-        }
-
+        newIntent();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResult) {
-        if (requestCode == CODE_PERMISSION_SMS) {
-            if (grantResult[0] == PackageManager.PERMISSION_GRANTED) {
-                todo_sms();
-            } else {
-                Toast.makeText(this, "M?", Toast.LENGTH_SHORT).show();
-            }
-
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        if(requestCode == PERMISSIONS_REQUEST_READ_CONTACTS){
+            showContacts();
+        } else {
+            Toast.makeText(this,
+                    "Until you grant the permission, we cannot display the name",
+                    Toast.LENGTH_SHORT).show();
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResult);
     }
+
+
+
+    private void showContacts() {
+        Uri indoxUri = Uri.parse("content://sms/inbox");
+        MessageList =  new ArrayList<>();
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(indoxUri, null, null, null, null);
+        while (cursor.moveToNext()){
+            String number = cursor.getString(cursor.getColumnIndexOrThrow("address")).toString();
+            String body = cursor.getString(cursor.getColumnIndexOrThrow("body")).toString();
+            String date = cursor.getString(cursor.getColumnIndexOrThrow("date")).toString();
+            String type = cursor.getString(cursor.getColumnIndexOrThrow("type")).toString();
+            MessageList.add("Number:    " + number + "\n" + "Date:  " + date + "\n" + "Type:    " + type + "\n" +  "Body:  " + body);
+        }
+        cursor.close();
+    }
+
 
 }

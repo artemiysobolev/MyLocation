@@ -24,6 +24,13 @@ public class ContactsActivity extends AppCompatActivity {
     String name, phonenumber ;
     private static final int MY_PERMISSION_REQUEST=1;
 
+    protected void newIntent() {
+        Intent intent = new Intent();
+        intent.putStringArrayListExtra("contacts", StoreContacts);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +55,8 @@ public class ContactsActivity extends AppCompatActivity {
             GetContactsIntoArrayList();
         }
 
-        listView = (ListView) findViewById(R.id.contactsListView);
-
-        Intent intent = new Intent();
-            intent.putStringArrayListExtra("contacts", StoreContacts);
-            setResult(RESULT_OK, intent);
-            finish();
+        listView = (ListView) findViewById(R.id.listview1);
+        newIntent();
     }
 
     public void GetContactsIntoArrayList(){
@@ -72,44 +75,5 @@ public class ContactsActivity extends AppCompatActivity {
         cursor.close();
 
     }
-
-//    public void EnableRuntimePermission(){
-//
-//        if (ActivityCompat.shouldShowRequestPermissionRationale(
-//                com.example.mylocation.ContactsActivity.this,
-//                Manifest.permission.READ_CONTACTS))
-//        {
-//
-//            Toast.makeText(com.example.mylocation.ContactsActivity.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
-//
-//        } else {
-//
-//            ActivityCompat.requestPermissions(com.example.mylocation.ContactsActivity.this,new String[]{
-//                    Manifest.permission.READ_CONTACTS}, RequestPermissionCode);
-//
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
-//
-//
-//        switch (RC) {
-//
-//            case RequestPermissionCode:
-//
-//                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-//
-//                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Granted, Now your application can access CONTACTS.", Toast.LENGTH_LONG).show();
-//
-//                } else {
-//
-//                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Canceled, Now your application cannot access CONTACTS.", Toast.LENGTH_LONG).show();
-//
-//                }
-//                break;
-//        }
-//    }
-
 
 }
