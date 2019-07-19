@@ -41,7 +41,7 @@ public class MessagesActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.READ_SMS},
                     PERMISSIONS_REQUEST_READ_CONTACTS);
         }
-        
+
     }
 
     @Override
@@ -58,24 +58,26 @@ public class MessagesActivity extends AppCompatActivity {
 
 
     private void showContacts() {
-        Uri indoxUri = Uri.parse("content://sms/inbox");
-        MessageList =  new ArrayList<>();
-        ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(indoxUri, null, null, null, null);
-        while (cursor.moveToNext()){
-            String number = cursor.getString(cursor.getColumnIndexOrThrow("address")).toString();
-            String body = cursor.getString(cursor.getColumnIndexOrThrow("body")).toString();
-            String date = cursor.getString(cursor.getColumnIndexOrThrow("date")).toString();
-            String type = cursor.getString(cursor.getColumnIndexOrThrow("type")).toString();
-            MessageList.add("Number:    " + number + "\n" + "Date:  " + date + "\n" + "Type:    " + type + "\n" +  "Body:  " + body);
-        }
-        cursor.close();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                MessageList);
-        lstMessage.setAdapter(adapter);
+            Uri indoxUri = Uri.parse("content://sms/inbox");
+            MessageList =  new ArrayList<>();
+            ContentResolver contentResolver = getContentResolver();
+            Cursor cursor = contentResolver.query(indoxUri, null, null, null, null);
+            int MessageDate = cursor.getColumnIndex(Telephony.Sms.DATE_SENT);
+            int MessageType = cursor.getColumnIndex(Telephony.Sms.TYPE);
+            while (cursor.moveToNext()){
+                String number = cursor.getString(cursor.getColumnIndexOrThrow("address")).toString();
+                String body = cursor.getString(cursor.getColumnIndexOrThrow("body")).toString();
+                String currentDate = cursor.getString(MessageDate);
+                String currentType = cursor.getString(MessageType);
+                MessageList.add("Number:    " + number + "\n" + "Date:  " + currentDate + "\n" + "Type:    " + currentType + "\n" +  "Body:  " + body);
+            }
+            cursor.close();
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1,
+                    MessageList);
+            lstMessage.setAdapter(adapter);
 
-    }
+        }
 
 
 }
