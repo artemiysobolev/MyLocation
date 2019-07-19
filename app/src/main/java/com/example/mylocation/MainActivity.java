@@ -50,9 +50,11 @@ public class MainActivity extends AppCompatActivity
 
         id = R.id.nav_deviceinfo;
         fragmentClass = DeviceInfoFragment.class;
-        tryInstance();
-        Intent intent = new Intent(this, DeviceInfoActivity.class);
-        startActivityForResult(intent, 1);
+        if (savedInstanceState == null) {
+            tryInstance();
+            Intent intent = new Intent(this, DeviceInfoActivity.class);
+            startActivityForResult(intent, 1);
+        }
     }
 
     @Override
