@@ -14,39 +14,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/infoTextView"
-                android:layout_width="332dp"
-                android:layout_height="228dp"
-                android:layout_marginStart="39dp"
-                android:layout_marginLeft="39dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginRight="40dp"
-                android:text="@string/device_info_textview"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        <TextView
+            android:id="@+id/infoTextView"
+            android:layout_width="332dp"
+            android:layout_height="228dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/device_info_textview"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/infoImageView" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="306dp"
-                android:layout_height="193dp"
-                android:layout_marginStart="53dp"
-                android:layout_marginLeft="53dp"
-                android:layout_marginTop="76dp"
-                android:layout_marginEnd="53dp"
-                android:layout_marginRight="53dp"
-                android:layout_marginBottom="40dp"
-                app:layout_constraintBottom_toTopOf="@+id/infoTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_info"
-                tools:ignore="VectorDrawableCompat" />
+        <ImageView
+            android:id="@+id/infoImageView"
+            android:layout_width="306dp"
+            android:layout_height="193dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="63dp"
+            app:layout_constraintBottom_toTopOf="@+id/infoTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_info"
+            tools:ignore="VectorDrawableCompat" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
