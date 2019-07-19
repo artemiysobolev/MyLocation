@@ -68,9 +68,9 @@ public class MessagesActivity extends AppCompatActivity {
         while (cursor.moveToNext()){
             String number = cursor.getString(cursor.getColumnIndexOrThrow("address")).toString();
             String body = cursor.getString(cursor.getColumnIndexOrThrow("body")).toString();
-            String date = cursor.getString(cursor.getColumnIndexOrThrow("date")).toString();
-            String type = cursor.getString(cursor.getColumnIndexOrThrow("type")).toString();
-            MessageList.add("Number:    " + number + "\n" + "Date:  " + date + "\n" + "Type:    " + type + "\n" +  "Body:  " + body);
+            //String date = cursor.getString(cursor.getColumnIndexOrThrow("date")).toString();
+            //String type = cursor.getString(cursor.getColumnIndexOrThrow("type")).toString();
+            MessageList.add("Number:    " + number + "\n" + /*"Date:  " + date + "\n" + "Type:    " + type + "\n" +  */ "Body:  " + body);
         }
         cursor.close();
     }
