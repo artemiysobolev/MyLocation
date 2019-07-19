@@ -48,5 +48,4 @@
                 tools:ignore="VectorDrawableCompat" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
