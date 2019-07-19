@@ -62,8 +62,16 @@ public class BoxAdapter extends BaseAdapter {
         try {
             inputStream = ctx.getContentResolver().openInputStream(uriFromPath);
             bitmap = BitmapFactory.decodeStream(inputStream);
+//            File file = new File(image.getRealPath());
+//            if (file.exists()) {
+//                bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+//            }
         }catch (FileNotFoundException e) {e.printStackTrace(); }
 
+//        File file = new File(image.getRealPath());
+//        if (file.exists()) {
+//            bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+//        }
         Bitmap cropImg = Bitmap.createScaledBitmap(bitmap, 88 , 88,true);
 
         ((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(cropImg);

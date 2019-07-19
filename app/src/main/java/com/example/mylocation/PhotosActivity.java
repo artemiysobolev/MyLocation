@@ -22,10 +22,10 @@ public class PhotosActivity extends AppCompatActivity {
     ArrayList<Image> listView = new ArrayList<Image>();
     
     protected void newIntent() {
-        Intent intent = new Intent();
-        intent.putExtra("photos", listView);
-        setResult(RESULT_OK, intent);
-        finish();
+            Intent intent = new Intent();
+            intent.putExtra("photos", listView);
+            setResult(RESULT_OK, intent);
+            finish();
     }
     
     @Override
@@ -86,7 +86,7 @@ public class PhotosActivity extends AppCompatActivity {
             int size = cursor.getColumnIndex(MediaStore.Images.Media.SIZE);
             int realPath = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-            while (cursor.moveToNext()) {
+            do{
                 String currentTitle = cursor.getString(title);
                 if (currentTitle.length()>27) {
                     currentTitle = currentTitle.substring(0,24)+"...";
@@ -95,7 +95,8 @@ public class PhotosActivity extends AppCompatActivity {
                 String currentDate = converToTime(cursor.getString(date));
                 String currentSize = converToSize(cursor.getString(size));
                 listView.add(new Image(currentTitle, currentDate, currentSize,currentRealPath));
-            }
+            }while (cursor.moveToNext());
+
         }
         cursor .close();
 
