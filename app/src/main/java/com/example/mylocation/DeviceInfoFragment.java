@@ -19,7 +19,7 @@ public class DeviceInfoFragment extends Fragment {
 
         View rootView =
                 inflater.inflate(R.layout.fragment_device_info, container, false);
-        deviceInfoTextView = (TextView) rootView.findViewById(R.id.textView3);
+        deviceInfoTextView = (TextView) rootView.findViewById(R.id.infoTextView);
         deviceInfoFromActivity = getArguments().getString("info");
         deviceInfoTextView.setText(deviceInfoFromActivity);
 

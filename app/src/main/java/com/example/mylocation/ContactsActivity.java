@@ -6,17 +6,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import com.example.mylocation.R;
 
 import java.util.ArrayList;
 
@@ -80,44 +75,5 @@ public class ContactsActivity extends AppCompatActivity {
         cursor.close();
 
     }
-
-//    public void EnableRuntimePermission(){
-//
-//        if (ActivityCompat.shouldShowRequestPermissionRationale(
-//                com.example.mylocation.ContactsActivity.this,
-//                Manifest.permission.READ_CONTACTS))
-//        {
-//
-//            Toast.makeText(com.example.mylocation.ContactsActivity.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
-//
-//        } else {
-//
-//            ActivityCompat.requestPermissions(com.example.mylocation.ContactsActivity.this,new String[]{
-//                    Manifest.permission.READ_CONTACTS}, RequestPermissionCode);
-//
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
-//
-//
-//        switch (RC) {
-//
-//            case RequestPermissionCode:
-//
-//                if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-//
-//                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Granted, Now your application can access CONTACTS.", Toast.LENGTH_LONG).show();
-//
-//                } else {
-//
-//                    Toast.makeText(com.example.mylocation.ContactsActivity.this,"Permission Canceled, Now your application cannot access CONTACTS.", Toast.LENGTH_LONG).show();
-//
-//                }
-//                break;
-//        }
-//    }
-
 
 }
