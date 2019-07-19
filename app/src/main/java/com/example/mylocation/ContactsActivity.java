@@ -54,8 +54,7 @@ public class ContactsActivity extends AppCompatActivity {
         } else {
             GetContactsIntoArrayList();
         }
-
-        listView = (ListView) findViewById(R.id.listview1);
+        listView = (ListView) findViewById(R.id.contactsListView);
         newIntent();
     }
 
@@ -76,4 +75,3 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
-}

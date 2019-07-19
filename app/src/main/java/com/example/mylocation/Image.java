@@ -5,21 +5,56 @@ import android.os.Parcelable;
 
 //made from usual class by http://www.parcelabler.com
 public class Image implements Parcelable {
-    String nameImage;
-    String dateOfCreateImage;
-    String sizeImage;
+    private String nameImage,
+                    dateOfCreateImage,
+                    sizeImage,
+                    realPath;
 
-    Image(String my_name,String my_date,String my_size)
-    {
-        nameImage=my_name;
-        dateOfCreateImage=my_date;
-        sizeImage=my_size;
+
+    public String getDateOfCreateImage() {
+        return dateOfCreateImage;
+    }
+
+    public void setDateOfCreateImage(String dateOfCreateImage) {
+        this.dateOfCreateImage = dateOfCreateImage;
+    }
+
+    public String getSizeImage() {
+        return sizeImage;
+    }
+
+    public void setSizeImage(String sizeImage) {
+        this.sizeImage = sizeImage;
+    }
+
+    public String getNameImage() {
+        return nameImage;
+    }
+
+    public void setNameImage(String nameImage) {
+        this.nameImage = nameImage;
+    }
+
+    public String getRealPath() {
+        return realPath;
+    }
+
+    public void setRealPath(String realPath) {
+        this.realPath= realPath;
+    }
+
+    protected Image(String myName,String myDate,String mySize,String myRealPath) {
+        nameImage=myName;
+        dateOfCreateImage=myDate;
+        sizeImage=mySize;
+        realPath=myRealPath;
     }
 
     protected Image(Parcel in) {
         nameImage = in.readString();
         dateOfCreateImage = in.readString();
         sizeImage = in.readString();
+        realPath = in.readString();
     }
 
     @Override
@@ -32,6 +67,7 @@ public class Image implements Parcelable {
         dest.writeString(nameImage);
         dest.writeString(dateOfCreateImage);
         dest.writeString(sizeImage);
+        dest.writeString(realPath);
     }
 
     @SuppressWarnings("unused")
